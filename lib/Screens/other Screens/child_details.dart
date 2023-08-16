@@ -174,10 +174,10 @@ class _ChildDetailsState extends State<ChildDetails> {
               const SizedBox(height: 35.0),
               ElevatedButton(
                 onPressed: () {
-                  print(_dobcontroller.text);
-                  print(DateFormat("dd/MM/yyyy").parse(_dobcontroller.text));
-                  print(calculateMonthsPassed(
-                      DateFormat("dd/MM/yyyy").parse(_dobcontroller.text)));
+                  // print(_dobcontroller.text);
+                  // print(DateFormat("dd/MM/yyyy").parse(_dobcontroller.text));
+                  // print(calculateMonthsPassed(
+                  //     DateFormat("dd/MM/yyyy").parse(_dobcontroller.text)));
                   // calculateMonthsPassed(DateTime.parse(_dobcontroller.text));
                   pushNewScreen(
                     context,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mothering_app/profile.dart';
+import 'package:mothering_app/Screens/other%20Screens/profile.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class MotheringAppBarDrawer extends StatelessWidget {
@@ -13,7 +13,7 @@ class MotheringAppBarDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              height: 100,
+              height: 110,
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   color: Color.fromRGBO(124, 218, 252, 1),

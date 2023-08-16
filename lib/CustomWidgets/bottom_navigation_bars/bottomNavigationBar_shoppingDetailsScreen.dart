@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mothering_app/Screens/other%20Screens/PlaceorderScreen.dart';
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/PlaceorderScreen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class BottomNavigationBar_ShoppingDetailsScreen extends StatefulWidget {

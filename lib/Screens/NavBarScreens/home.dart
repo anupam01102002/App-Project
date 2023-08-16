@@ -6,7 +6,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
 import 'package:mothering_app/CustomWidgets/productcard_1.dart';
 import 'package:mothering_app/CustomWidgets/subtitle.dart';
-import 'package:mothering_app/child_details.dart';
+import 'package:mothering_app/Screens/other%20Screens/child_details.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:time_machine/time_machine.dart' as time_machine;
 

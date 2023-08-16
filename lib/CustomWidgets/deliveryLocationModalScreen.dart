@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mothering_app/Screens/other%20Screens/addressbook.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:mothering_app/models/Address_model.dart';
 
 class ModalDeliveryLocation extends StatelessWidget {
   final String playAreaName;
@@ -10,7 +11,6 @@ class ModalDeliveryLocation extends StatelessWidget {
     required this.playAreaName,
     required this.playAreaLocation,
   });
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -86,15 +86,20 @@ class ModalDeliveryLocation extends StatelessWidget {
                             children: [
                               Center(
                                 child: TextButton(
-                                  onPressed: () {
-                                    pushNewScreen(
-                                      context,
-                                      screen: AddressbookScreen(),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
+                                  onPressed: () async {
+                                    var addresses = await getAddress();
+                                    Future.delayed(Duration.zero, () {
+                                      pushNewScreen(
+                                        context,
+                                        screen: AddressbookScreen(
+                                          addresses: addresses,
+                                        ),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                    });
                                   },
                                   child: const Text(
                                     'Manage address book',

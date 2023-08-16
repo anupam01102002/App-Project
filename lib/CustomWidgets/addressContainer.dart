@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+// import 'package:mothering_app/models/Address.dart';
 
-class AddressContainer extends StatelessWidget {
+class AddressContainer extends StatefulWidget {
   final String? tagName;
   final String userName;
+  final int id;
   final String blockNo;
   final int pincode;
   final String cityName;
   final String landmarkName;
   final String streetAddress;
-  final int phoneNumber;
+  final String phoneNumber;
+  final String type;
 
   AddressContainer({
     required this.tagName,
+    required this.id,
     required this.userName,
     required this.blockNo,
     required this.pincode,
@@ -19,7 +23,14 @@ class AddressContainer extends StatelessWidget {
     required this.landmarkName,
     required this.streetAddress,
     required this.phoneNumber,
+    required this.type,
   });
+
+  @override
+  State<AddressContainer> createState() => _AddressContainerState();
+}
+
+class _AddressContainerState extends State<AddressContainer> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,15 +52,15 @@ class AddressContainer extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AddressTagContainer(tagName: tagName),
+                      AddressTagContainer(tagName: widget.tagName),
                       AddressDetailsContainer(
-                        userName: userName,
-                        blockNo: blockNo,
-                        pincode: '$pincode',
-                        cityName: cityName,
-                        landmarkName: landmarkName,
-                        streetAddress: streetAddress,
-                        phoneNumber: '$phoneNumber',
+                        userName: widget.userName,
+                        blockNo: widget.blockNo,
+                        pincode: '${widget.pincode}',
+                        cityName: widget.cityName,
+                        landmarkName: widget.landmarkName,
+                        streetAddress: widget.streetAddress,
+                        phoneNumber: '${widget.phoneNumber}',
                       ),
                     ],
                   ),

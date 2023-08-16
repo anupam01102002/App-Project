@@ -3,7 +3,7 @@ import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
 import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
 import 'package:mothering_app/CustomWidgets/orederstatusdetails_screencontainer.dart';
-import 'package:mothering_app/Screens/other%20Screens/orderplacedsuccess_screen.dart';
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/orderplacedsuccess_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class OrderStatusDetailsScreen extends StatelessWidget {
@@ -37,12 +37,16 @@ class OrderStatusDetailsScreen extends StatelessWidget {
               placedOn: DateTime.now(),
               itemNo: 1,
               price: price,
-              onTap: () {pushNewScreen(
-                context,
-                screen: OrderPlacedSuccessScreen(price: price,),
-                withNavBar: true, // OPTIONAL VALUE. True by default.
-                pageTransitionAnimation: PageTransitionAnimation.cupertino,
-              );},
+              onTap: () {
+                pushNewScreen(
+                  context,
+                  screen: OrderPlacedSuccessScreen(
+                    price: price,
+                  ),
+                  withNavBar: true, // OPTIONAL VALUE. True by default.
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
             ),
             OrderStatusScreenDetailsContainer(
               orderID: 4564681,
@@ -54,14 +58,17 @@ class OrderStatusDetailsScreen extends StatelessWidget {
               onPressed: () {},
             ),
             AddressContainer(
-                tagName: '',
-                userName: 'userName',
-                blockNo: 'blockNo',
-                pincode: 123124,
-                cityName: 'cityName',
-                landmarkName: 'landmarkName',
-                streetAddress: 'streetAddress',
-                phoneNumber: 1234124423),
+              tagName: '',
+              userName: 'userName',
+              blockNo: 'blockNo',
+              pincode: 123124,
+              cityName: 'cityName',
+              landmarkName: 'landmarkName',
+              streetAddress: 'streetAddress',
+              phoneNumber: '1234124423',
+              id: 456745,
+              type: 'address.type!',
+            ),
             const PaymentDetailsContainer(
               valueOfProducts: 728.50,
               discount: 146.55,

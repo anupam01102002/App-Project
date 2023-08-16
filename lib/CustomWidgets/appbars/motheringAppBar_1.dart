@@ -66,7 +66,10 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           child: IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
             onPressed: () {},
           ),
         ),
@@ -82,7 +85,10 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           child: IconButton(
-            icon: const Icon(Icons.notifications_outlined),
+            icon: const Icon(
+              Icons.notifications_outlined,
+              color: Colors.white,
+            ),
             selectedIcon: const Icon(Icons.notifications),
             onPressed: () {
               // Add your notifications icon functionality here
@@ -101,7 +107,7 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           child: IconButton(
-            icon: const Icon(Icons.favorite_border),
+            icon: const Icon(Icons.favorite_border, color: Colors.white),
             selectedIcon: const Icon(Icons.favorite),
             onPressed: () {
               // Add your favorites icon functionality here
@@ -120,7 +126,7 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           child: IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
+            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
             selectedIcon: const Icon(Icons.shopping_cart),
             onPressed: () {
               // Add your cart icon functionality here

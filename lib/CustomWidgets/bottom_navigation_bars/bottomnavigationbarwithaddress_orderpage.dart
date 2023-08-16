@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mothering_app/Screens/other%20Screens/paymentscreen.dart';
-import 'package:mothering_app/Screens/other%20Screens/placeorder_withAddress_Screen.dart';
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/paymentscreen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class BottomNavigationBarWithAddress_OrderScreen extends StatefulWidget {

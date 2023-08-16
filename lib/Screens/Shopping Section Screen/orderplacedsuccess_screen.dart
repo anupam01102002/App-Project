@@ -3,7 +3,7 @@ import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
 import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
 import 'package:mothering_app/CustomWidgets/orederstatusdetails_screencontainer.dart';
-import 'package:mothering_app/Screens/other%20Screens/cancel_order_screen.dart';
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/cancel_order_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class OrderPlacedSuccessScreen extends StatelessWidget {
@@ -43,7 +43,9 @@ class OrderPlacedSuccessScreen extends StatelessWidget {
               cityName: 'cityName',
               landmarkName: 'landmarkName',
               streetAddress: 'streetAddress',
-              phoneNumber: 1234124423,
+              phoneNumber: '1234124423',
+              id: 456745,
+              type: 'address.type!',
             ),
             Container(
               height: 3,

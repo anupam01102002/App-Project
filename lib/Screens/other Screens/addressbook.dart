@@ -3,9 +3,28 @@ import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
 import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
 import 'package:mothering_app/Screens/other%20Screens/addnewaddress_screen.dart';
+import 'package:mothering_app/models/Address_model.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+// import 'package:dio/dio.dart' as dio;
+// import 'dart:convert';
+// import 'dart:async';
 
-class AddressbookScreen extends StatelessWidget {
+class AddressbookScreen extends StatefulWidget {
+  final List<Addresses> addresses;
+
+  const AddressbookScreen({
+    super.key,
+    required this.addresses,
+  });
+  @override
+  State<AddressbookScreen> createState() => _AddressbookScreenState(addresses);
+}
+
+class _AddressbookScreenState extends State<AddressbookScreen> {
+  final List<Addresses> addresses;
+
+  _AddressbookScreenState(this.addresses);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,15 +33,31 @@ class AddressbookScreen extends StatelessWidget {
       drawer: MotheringAppBarDrawer(),
       body: Column(
         children: [
-          AddressContainer(
-              tagName: 'tagName',
-              userName: 'userName',
-              blockNo: 'blockNo',
-              pincode: 453645687,
-              cityName: 'cityName',
-              landmarkName: 'landmarkName',
-              streetAddress: 'streetAddress',
-              phoneNumber: 543483645),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: addresses.length,
+              itemBuilder: (BuildContext context, int index) {
+                final address =
+                    addresses[index]; // Get the current Addresses object
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: AddressContainer(
+                    tagName: 'tagName',
+                    userName: address.name!,
+                    blockNo: address.address!,
+                    pincode: address.pincode!,
+                    cityName: address.city!,
+                    landmarkName: address.landmark!,
+                    streetAddress: address.address1!,
+                    phoneNumber: address.mobile!,
+                    id: address.id!,
+                    type: address.type!,
+                  ),
+                );
+              },
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(
               top: 8,
@@ -46,7 +81,7 @@ class AddressbookScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         pushNewScreen(
                           context,
                           screen: NewAddress(),
