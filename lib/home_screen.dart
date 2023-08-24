@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 import 'Screens/NavBarScreens/magazine_stories.dart';
@@ -15,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   final Period? months;
   final String? value;
   final bool? show;
+  final int? count;
 
   HomeScreen({
     this.name,
@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
     this.show,
     this.months,
     this.value,
+    this.count,
   });
 
   List<Widget> _buildScreen(BuildContext context) {
@@ -31,6 +32,7 @@ class HomeScreen extends StatelessWidget {
         dob: dob,
         show: show,
         months: months,
+        cart_count: count,
       ),
       MotheringShopScreen(
         name: name,

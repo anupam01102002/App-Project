@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
 import 'package:mothering_app/Screens/other%20Screens/addnewaddress_screen.dart';
 import 'package:mothering_app/models/Address_model.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
-// import 'package:dio/dio.dart' as dio;
-// import 'dart:convert';
-// import 'dart:async';
 
 class AddressbookScreen extends StatefulWidget {
   final List<Addresses> addresses;
@@ -35,7 +32,7 @@ class _AddressbookScreenState extends State<AddressbookScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
               itemCount: addresses.length,
               itemBuilder: (BuildContext context, int index) {
                 final address =
@@ -52,7 +49,8 @@ class _AddressbookScreenState extends State<AddressbookScreen> {
                     streetAddress: address.address1!,
                     phoneNumber: address.mobile!,
                     id: address.id!,
-                    type: address.type!,
+                    type: int.parse(address.type!),
+                    state: address.state!,
                   ),
                 );
               },
@@ -81,7 +79,7 @@ class _AddressbookScreenState extends State<AddressbookScreen> {
                 children: [
                   Center(
                     child: TextButton(
-                      onPressed: () async {
+                      onPressed: () {
                         pushNewScreen(
                           context,
                           screen: NewAddress(),

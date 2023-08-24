@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/cartScreen.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
+  final int? cart_count;
+
+  MotheringAppBar_1({
+    this.cart_count,
+  });
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -100,8 +108,8 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
           badgeStyle: const badges.BadgeStyle(
             badgeColor: Color.fromRGBO(255, 122, 122, 1),
           ),
-          badgeContent: const Text(
-            '3',
+          badgeContent: Text(
+            '$cart_count',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -119,8 +127,8 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
           badgeStyle: const badges.BadgeStyle(
             badgeColor: Color.fromRGBO(255, 122, 122, 1),
           ),
-          badgeContent: const Text(
-            '3',
+          badgeContent: Text(
+            '$cart_count',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -129,7 +137,12 @@ class MotheringAppBar_1 extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
             selectedIcon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              // Add your cart icon functionality here
+              pushNewScreen(
+                context,
+                screen: CartScreen(),
+                withNavBar: false, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              );
             },
           ),
         ),

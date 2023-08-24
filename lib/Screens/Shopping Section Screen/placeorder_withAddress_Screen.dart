@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
 import 'package:mothering_app/CustomWidgets/bottom_navigation_bars/bottomnavigationbarwithaddress_orderpage.dart';
-import 'package:mothering_app/CustomWidgets/giftcheckbox.dart';
-import 'package:mothering_app/CustomWidgets/giftcontainer.dart';
-import 'package:mothering_app/CustomWidgets/itemOrderContainer.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
-import 'package:mothering_app/CustomWidgets/placeorder_quickgrabcontainer.dart';
+import 'package:mothering_app/CustomWidgets/Shopping_screen_containers/giftcheckbox.dart';
+import 'package:mothering_app/CustomWidgets/Shopping_screen_containers/giftcontainer.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/Shopping_screen_containers/quickgrabcontainer.dart';
 import 'package:mothering_app/CustomWidgets/subtitle.dart';
 
 class PlaceOrderWithAddressScreen extends StatelessWidget {
@@ -93,6 +92,7 @@ class PlaceOrderWithAddressScreen extends StatelessWidget {
               ),
             ),
             AddressContainer(
+              state: 'address.type!',
               tagName: '',
               userName: 'userName',
               blockNo: 'blockNo',
@@ -102,34 +102,34 @@ class PlaceOrderWithAddressScreen extends StatelessWidget {
               streetAddress: 'streetAddress',
               phoneNumber: '1234124423',
               id: 4,
-              type: 'address.type!',
+              type: 1,
             ),
             Container(
               height: 5,
               width: double.infinity,
-              color: Color.fromRGBO(163, 231, 255, 1),
+              color: const Color.fromRGBO(163, 231, 255, 1),
             ),
             const GiftContainer(
               receiverName: 'Ravindra',
               senderName: 'Mitesh',
               message: 'message',
             ),
-            ItemOrderContainer(
-              itemName: itemName,
-              price: price,
-              deprecatedPrice: deprecatedPrice,
-              deliveryDate: deliveryDate,
-              imagePath: imagePath,
-              discountPercentage: discountPercentage,
-            ),
-            ItemOrderContainer(
-              itemName: itemName,
-              price: price,
-              deprecatedPrice: deprecatedPrice,
-              deliveryDate: deliveryDate,
-              imagePath: imagePath,
-              discountPercentage: discountPercentage,
-            ),
+            // ItemOrderContainer(
+            //   itemName: itemName,
+            //   price: price,
+            //   deprecatedPrice: deprecatedPrice,
+            //   deliveryDate: deliveryDate,
+            //   imagePath: imagePath,
+            //   discountPercentage: discountPercentage,
+            // ),
+            // ItemOrderContainer(
+            //   itemName: itemName,
+            //   price: price,
+            //   deprecatedPrice: deprecatedPrice,
+            //   deliveryDate: deliveryDate,
+            //   imagePath: imagePath,
+            //   discountPercentage: discountPercentage,
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -170,27 +170,27 @@ class PlaceOrderWithAddressScreen extends StatelessWidget {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          children: [
+                          children: const [
                             QuickGrabContainer(
-                              itemName: itemName,
-                              price: price,
-                              deprecatedPrice: deprecatedPrice,
-                              imagePath: imagePath,
-                              discountPercentage: discountPercentage,
+                              itemName: 'widget.itemName!',
+                              price: 1231,
+                              deprecatedPrice: 1231,
+                              imagePath: 'assets/images/Cloth_1.png',
+                              discountPercentage: 12,
                             ),
                             QuickGrabContainer(
-                              itemName: itemName,
-                              price: price,
-                              deprecatedPrice: deprecatedPrice,
-                              imagePath: imagePath,
-                              discountPercentage: discountPercentage,
+                              itemName: 'widget.itemName!',
+                              price: 1231,
+                              deprecatedPrice: 1231,
+                              imagePath: 'assets/images/Cloth_1.png',
+                              discountPercentage: 12,
                             ),
                             QuickGrabContainer(
-                              itemName: itemName,
-                              price: price,
-                              deprecatedPrice: deprecatedPrice,
-                              imagePath: imagePath,
-                              discountPercentage: discountPercentage,
+                              itemName: 'widget.itemName!',
+                              price: 1231,
+                              deprecatedPrice: 1231,
+                              imagePath: 'assets/images/Cloth_1.png',
+                              discountPercentage: 12,
                             ),
                           ],
                         ),
@@ -240,27 +240,27 @@ class PlaceOrderWithAddressScreen extends StatelessWidget {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          children: [
+                          children: const [
                             QuickGrabContainer(
-                              itemName: itemName,
-                              price: price,
-                              deprecatedPrice: deprecatedPrice,
-                              imagePath: imagePath,
-                              discountPercentage: discountPercentage,
+                              itemName: 'widget.itemName!',
+                              price: 1231,
+                              deprecatedPrice: 1231,
+                              imagePath: 'assets/images/Cloth_1.png',
+                              discountPercentage: 12,
                             ),
                             QuickGrabContainer(
-                              itemName: itemName,
-                              price: price,
-                              deprecatedPrice: deprecatedPrice,
-                              imagePath: imagePath,
-                              discountPercentage: discountPercentage,
+                              itemName: 'widget.itemName!',
+                              price: 1231,
+                              deprecatedPrice: 1231,
+                              imagePath: 'assets/images/Cloth_1.png',
+                              discountPercentage: 12,
                             ),
                             QuickGrabContainer(
-                              itemName: itemName,
-                              price: price,
-                              deprecatedPrice: deprecatedPrice,
-                              imagePath: imagePath,
-                              discountPercentage: discountPercentage,
+                              itemName: 'widget.itemName!',
+                              price: 1231,
+                              deprecatedPrice: 1231,
+                              imagePath: 'assets/images/Cloth_1.png',
+                              discountPercentage: 12,
                             ),
                           ],
                         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
-import 'package:mothering_app/CustomWidgets/orederstatusdetails_screencontainer.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/Shopping_screen_containers/orederstatusdetails_screencontainer.dart';
 import 'package:mothering_app/Screens/Shopping%20Section%20Screen/cancel_order_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
@@ -45,7 +45,8 @@ class OrderPlacedSuccessScreen extends StatelessWidget {
               streetAddress: 'streetAddress',
               phoneNumber: '1234124423',
               id: 456745,
-              type: 'address.type!',
+              type: 1,
+              state: 'address.type!',
             ),
             Container(
               height: 3,

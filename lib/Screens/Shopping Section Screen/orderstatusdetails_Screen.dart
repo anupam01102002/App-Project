@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/addressContainer.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
-import 'package:mothering_app/CustomWidgets/orederstatusdetails_screencontainer.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/Shopping_screen_containers/orederstatusdetails_screencontainer.dart';
 import 'package:mothering_app/Screens/Shopping%20Section%20Screen/orderplacedsuccess_screen.dart';
+import 'package:mothering_app/models/orders_model.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
-class OrderStatusDetailsScreen extends StatelessWidget {
-  final String itemName;
-  final double price;
-  final double deprecatedPrice;
-  final DateTime deliveryDate;
-  final String imagePath;
-  final int discountPercentage;
-
+class OrderStatusDetailsScreen extends StatefulWidget {
+  final List<Orders> Orders_List;
+  final int index;
   OrderStatusDetailsScreen({
-    required this.itemName,
-    required this.price,
-    required this.deprecatedPrice,
-    required this.deliveryDate,
-    required this.imagePath,
-    required this.discountPercentage,
+    super.key,
+    required this.Orders_List,
+    required this.index,
   });
 
   @override
+  State<OrderStatusDetailsScreen> createState() =>
+      _OrderStatusDetailsScreenState(Orders_List, index);
+}
+
+class _OrderStatusDetailsScreenState extends State<OrderStatusDetailsScreen> {
+  final List<Orders> Orders_List;
+  final int index;
+
+  _OrderStatusDetailsScreenState(
+    this.Orders_List,
+    this.index,
+  );
+
+  @override
   Widget build(BuildContext context) {
+    var orderProduct = Orders_List[index];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MotheringAppBar_1(),
@@ -33,15 +41,15 @@ class OrderStatusDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             OrderDetailsContainer(
-              orderID: '1234141',
-              placedOn: DateTime.now(),
+              orderID: orderProduct.id!,
+              placedOn: orderProduct.orderDate!,
               itemNo: 1,
-              price: price,
+              price: 123,
               onTap: () {
                 pushNewScreen(
                   context,
                   screen: OrderPlacedSuccessScreen(
-                    price: price,
+                    price: 123,
                   ),
                   withNavBar: true, // OPTIONAL VALUE. True by default.
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
@@ -49,12 +57,13 @@ class OrderStatusDetailsScreen extends StatelessWidget {
               },
             ),
             OrderStatusScreenDetailsContainer(
-              orderID: 4564681,
-              orderDate: DateTime.now(),
-              itemName: 'itemName',
+              itemColor: orderProduct.orderProducts![0].colorName!,
+              orderID: orderProduct.id!,
+              orderDate: orderProduct.orderDate!,
+              itemName: orderProduct.orderProducts![0].productName!,
               deliveryDate: DateTime.now(),
               returnDate: DateTime.now(),
-              imagePath: 'assets/images/Cloth_1.png',
+              imagePath: orderProduct.orderProducts![0].image!,
               onPressed: () {},
             ),
             AddressContainer(
@@ -67,7 +76,8 @@ class OrderStatusDetailsScreen extends StatelessWidget {
               streetAddress: 'streetAddress',
               phoneNumber: '1234124423',
               id: 456745,
-              type: 'address.type!',
+              type: 1,
+              state: 'address.type!',
             ),
             const PaymentDetailsContainer(
               valueOfProducts: 728.50,
@@ -238,7 +248,7 @@ class PaymentTextContainer extends StatelessWidget {
 
 class OrderDetailsContainer extends StatelessWidget {
   final String orderID;
-  final DateTime placedOn;
+  final String placedOn;
   final int itemNo;
   final double price;
   final VoidCallback onTap;

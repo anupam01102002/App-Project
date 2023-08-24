@@ -3,7 +3,7 @@ import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
 import 'package:mothering_app/CustomWidgets/child_details_container.dart';
 import 'package:mothering_app/CustomWidgets/deliveryLocationContainer.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
 import 'package:mothering_app/CustomWidgets/productcard_1.dart';
 import 'package:mothering_app/CustomWidgets/subtitle.dart';
 import 'package:mothering_app/Screens/other%20Screens/child_details.dart';
@@ -15,12 +15,14 @@ class MotheringHomeScreen extends StatefulWidget {
   final String? dob;
   final time_machine.Period? months;
   final bool? show;
+  final int? cart_count;
 
   MotheringHomeScreen({
     this.name,
     this.dob,
     this.show,
     this.months,
+    this.cart_count,
   });
 
   @override
@@ -48,7 +50,9 @@ class _MotheringHomeScreenState extends State<MotheringHomeScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       resizeToAvoidBottomInset: false,
-      appBar: MotheringAppBar_1(),
+      appBar: MotheringAppBar_1(
+        cart_count: widget.cart_count,
+      ),
       drawer: MotheringAppBarDrawer(),
       body: SingleChildScrollView(
         child: Center(

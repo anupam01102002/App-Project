@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
 import 'package:mothering_app/CustomWidgets/subtitle.dart';
 import 'package:mothering_app/Screens/Shopping%20Section%20Screen/COD%20otp%20screen.dart';
 import 'package:mothering_app/Screens/Shopping%20Section%20Screen/orderstatusscreen.dart';
+import 'package:mothering_app/models/orders_model.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -41,13 +42,24 @@ class PaymentScreen extends StatelessWidget {
           PaymentContainer(
             name: 'CREDIT/DEBIT CARDS',
             iconImagePath: 'assets/images/Creditcard_icon.png',
-            ontap: () {
-              pushNewScreen(
-                context,
-                screen: OrderStatusScreen(),
-                withNavBar: true, // OPTIONAL VALUE. True by default.
-                pageTransitionAnimation: PageTransitionAnimation.cupertino,
-              );
+            ontap: () async {
+              var orders = await getOrdersList();
+              if (orders != null) {
+                print(orders);
+                Future.delayed(Duration.zero, () {
+                  pushNewScreen(
+                    context,
+                    screen: OrderStatusScreen(
+                      OrdersList: orders,
+                    ),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                });
+              } else {
+                print("Orders list is null.");
+                // Handle the situation when orders are null.
+              }
             },
           ),
           PaymentContainer(

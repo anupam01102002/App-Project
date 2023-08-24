@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
 import 'package:mothering_app/CustomWidgets/bottom_navigation_bars/bottomNavigationBar_ShoppingScreen.dart';
 import 'package:mothering_app/CustomWidgets/deliveryLocationContainer.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
-import 'package:mothering_app/Screens/other%20Screens/item_details_screen.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/item_details_screen.dart';
 import '/CustomWidgets/productcard_2.dart';
 
 class ShoppingScreen extends StatelessWidget {

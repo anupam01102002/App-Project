@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mothering_app/CustomWidgets/appbars/motheringAppBar_1.dart';
-import 'package:mothering_app/CustomWidgets/motheringAppBarDrawer.dart';
-import 'package:mothering_app/CustomWidgets/orderstatusscreen_container.dart';
+import 'package:mothering_app/CustomWidgets/app_drawer/motheringAppBarDrawer.dart';
+import 'package:mothering_app/CustomWidgets/Shopping_screen_containers/orderstatusscreen_container.dart';
 import 'package:mothering_app/Screens/Shopping%20Section%20Screen/orderstatusdetails_Screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:mothering_app/models/orders_model.dart';
 
-class OrderStatusScreen extends StatelessWidget {
-  const OrderStatusScreen({super.key});
+class OrderStatusScreen extends StatefulWidget {
+  final List<Orders> OrdersList;
+
+  const OrderStatusScreen({
+    super.key,
+    required this.OrdersList,
+  });
+
+  @override
+  State<OrderStatusScreen> createState() => _OrderStatusScreenState(OrdersList);
+}
+
+class _OrderStatusScreenState extends State<OrderStatusScreen> {
+  final List<Orders> OrdersList;
+
+  _OrderStatusScreenState(this.OrdersList);
 
   @override
   Widget build(BuildContext context) {
@@ -56,28 +71,36 @@ class OrderStatusScreen extends StatelessWidget {
                 ),
               ),
             ),
-            OrderStatusScreenContainer(
-              orderID: 4564681,
-              orderDate: DateTime.now(),
-              itemName: 'itemName',
-              deliveryDate: DateTime.now(),
-              imagePath: 'assets/images/Cloth_1.png',
-              onPressed: () {
-                pushNewScreen(
-                  context,
-                  screen: OrderStatusDetailsScreen(
-                    itemName: 'itemName',
-                    price: 213,
-                    deprecatedPrice: 132,
+            ListView.builder(
+              shrinkWrap: true, // Added this line
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+              itemCount: OrdersList.length,
+              itemBuilder: (BuildContext context, int index) {
+                final orderProduct = OrdersList[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: OrderStatusScreenContainer(
+                    productsList: orderProduct.orderProducts!,
+                    orderID: orderProduct.id!,
+                    orderDate: orderProduct.orderDate!,
+                    itemName: orderProduct.orderProducts![index].productName!,
                     deliveryDate: DateTime.now(),
-                    imagePath: 'assets/images/Cloth_1.png',
-                    discountPercentage: 23,
+                    onPressed: () {
+                      pushNewScreen(
+                        context,
+                        screen: OrderStatusDetailsScreen(
+                          Orders_List: OrdersList,
+                          index: index,
+                        ),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.cupertino,
+                      );
+                    },
                   ),
-                  withNavBar: true,
-                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
                 );
               },
-            )
+            ),
           ],
         ),
       ),

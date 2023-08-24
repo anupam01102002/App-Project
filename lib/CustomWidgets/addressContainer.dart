@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mothering_app/Screens/other%20Screens/editAddressScreen.dart';
 // import 'package:mothering_app/models/Address.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'dart:async';
+import 'package:dio/dio.dart' as dio;
+import 'package:mothering_app/Screens/other%20Screens/addressbook.dart';
+import 'dart:convert';
+import 'package:mothering_app/models/Address_model.dart';
+import 'package:mothering_app/models/addres_delete_model.dart';
 
 class AddressContainer extends StatefulWidget {
   final String? tagName;
@@ -11,7 +19,8 @@ class AddressContainer extends StatefulWidget {
   final String landmarkName;
   final String streetAddress;
   final String phoneNumber;
-  final String type;
+  final String state;
+  final int type;
 
   AddressContainer({
     required this.tagName,
@@ -24,6 +33,7 @@ class AddressContainer extends StatefulWidget {
     required this.streetAddress,
     required this.phoneNumber,
     required this.type,
+    required this.state,
   });
 
   @override
@@ -31,6 +41,77 @@ class AddressContainer extends StatefulWidget {
 }
 
 class _AddressContainerState extends State<AddressContainer> {
+  Future<void> postRequest(
+    int id,
+  ) async {
+    var url =
+        'http://msocial-ecommerce.shivinfotechsolution.in/api/v1/address/delete';
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "User-Agent": "PostmanRuntime/7.30.0",
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Connection": "keep-alive",
+      "Authorization":
+          "eyJpdiI6ImdtSHgxRUlrdXBUZ0RHSTRVZGdnUEE9PSIsInZhbHVlIjoicForQ0xRbzhzaG0vVlVPbHM5cTVETkdJSFBBNjEzQnNaaHAxV2JDUmpMR0w0WVgybnRlZ2lhTENwM0JGZWorQVF1WjU5dWNqUHFvRG9UcFk4ZThpSXc9PSIsIm1hYyI6ImNhOGIwZDJjOWIzYjI5MjRkYzY3YTMxOGEyYTQxMDU2YzY5YjFjY2FjNWUwNmE0NjU0OGExZjc5MmE5NDJkODQiLCJ0YWciOiIifQ"
+    };
+
+    try {
+      dio.FormData formData = dio.FormData.fromMap({
+        "id": id,
+      });
+      var response = await dio.Dio().post(
+        url,
+        options: dio.Options(headers: headers),
+        data: formData,
+      );
+      var jsonObject = jsonDecode(response.toString());
+      print(jsonObject);
+
+      if (response.statusCode == 200) {
+        var deleteResponse = DeleteAddress.fromJson(jsonObject);
+
+        if (deleteResponse.status == 200) {
+          var addresses = await getAddress();
+          // Successful Address Deletion
+
+          Future.delayed(Duration.zero, () {
+            pushNewScreen(
+              context,
+              screen: AddressbookScreen(
+                addresses: addresses,
+              ),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          });
+          // print('error 5');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(deleteResponse.message ?? ''),
+            backgroundColor: Colors.redAccent,
+          ));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Failed to Delete Address"),
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.toString()),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.only(top: 8.0),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -68,11 +149,25 @@ class _AddressContainerState extends State<AddressContainer> {
                 Container(
                   child: Row(
                     children: [
-                      Delete_Button(),
+                      Delete_Button(
+                        onTap: onTapDeleteAddress,
+                      ),
                       SizedBox(
                         width: 12,
                       ),
-                      Edit_Button(),
+                      Edit_Button(
+                        tagName: widget.tagName!,
+                        userName: widget.userName,
+                        blockNo: widget.blockNo,
+                        pincode: widget.pincode,
+                        cityName: widget.cityName,
+                        landmarkName: widget.landmarkName,
+                        streetAddress: widget.streetAddress,
+                        phoneNumber: widget.phoneNumber,
+                        type: widget.type,
+                        id: widget.id,
+                        state: widget.state,
+                      ),
                     ],
                   ),
                 )
@@ -82,6 +177,17 @@ class _AddressContainerState extends State<AddressContainer> {
         ),
       ),
     );
+  }
+
+  onTapDeleteAddress() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    postRequest(
+      widget.id,
+    );
+    // Timer(const Duration(seconds: 3), () {
+
+    // });
   }
 }
 
@@ -196,6 +302,10 @@ class AddressDetailsContainer extends StatelessWidget {
 }
 
 class Delete_Button extends StatelessWidget {
+  final VoidCallback onTap;
+
+  Delete_Button({required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -209,7 +319,7 @@ class Delete_Button extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: IconButton(
-          onPressed: () {},
+          onPressed: onTap,
           icon: Icon(Icons.delete),
           color: Color.fromRGBO(170, 0, 0, 1),
           iconSize: 15,
@@ -220,6 +330,32 @@ class Delete_Button extends StatelessWidget {
 }
 
 class Edit_Button extends StatelessWidget {
+  final String tagName;
+  final String userName;
+  final String blockNo;
+  final int pincode;
+  final String cityName;
+  final String landmarkName;
+  final String streetAddress;
+  final String phoneNumber;
+  final String state;
+  final int type;
+  final int id;
+
+  Edit_Button({
+    required this.tagName,
+    required this.userName,
+    required this.blockNo,
+    required this.pincode,
+    required this.state,
+    required this.cityName,
+    required this.landmarkName,
+    required this.streetAddress,
+    required this.phoneNumber,
+    required this.type,
+    required this.id,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -233,7 +369,26 @@ class Edit_Button extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            pushNewScreen(
+              context,
+              screen: EditAddress(
+                state: state,
+                tagName: tagName,
+                userName: userName,
+                blockNo: blockNo,
+                pincode: pincode,
+                cityName: cityName,
+                landmarkName: landmarkName,
+                streetAddress: streetAddress,
+                phoneNumber: phoneNumber,
+                type: type,
+                id: id,
+              ),
+              withNavBar: true, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
           icon: Icon(Icons.edit_square),
           color: Color.fromRGBO(3, 106, 181, 1),
           iconSize: 15,

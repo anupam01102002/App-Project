@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mothering_app/Screens/Shopping%20Section%20Screen/PlaceorderScreen.dart';
+import 'package:mothering_app/Screens/Shopping%20Section%20Screen/cartScreen.dart';
+import 'package:mothering_app/models/cart_add_or_update_model.dart';
+// import 'package:mothering_app/models/Address_model.dart';
+import 'package:mothering_app/models/cart_list_model.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:dio/dio.dart' as dio;
+import 'dart:convert';
+import 'dart:async';
 
 class BottomNavigationBar_ShoppingDetailsScreen extends StatefulWidget {
   final DateTime deliveryDate;
@@ -29,30 +35,116 @@ class _BottomNavigationBar_ShoppingDetailsScreenState
   int _selectedIndex = 0;
   String _selectedGender = '';
 
-  void _onItemTapped(int index) {
+  Future<void> AddorUpdateCartPostRequest(
+    int variationId,
+    int productId,
+    int colorId,
+    int sizeId,
+    String qty,
+  ) async {
+    var url =
+        'http://msocial-ecommerce.shivinfotechsolution.in/api/v1/cartAddOrUpdate';
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "User-Agent": "PostmanRuntime/7.30.0",
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Connection": "keep-alive",
+      "Authorization":
+          "eyJpdiI6ImdtSHgxRUlrdXBUZ0RHSTRVZGdnUEE9PSIsInZhbHVlIjoicForQ0xRbzhzaG0vVlVPbHM5cTVETkdJSFBBNjEzQnNaaHAxV2JDUmpMR0w0WVgybnRlZ2lhTENwM0JGZWorQVF1WjU5dWNqUHFvRG9UcFk4ZThpSXc9PSIsIm1hYyI6ImNhOGIwZDJjOWIzYjI5MjRkYzY3YTMxOGEyYTQxMDU2YzY5YjFjY2FjNWUwNmE0NjU0OGExZjc5MmE5NDJkODQiLCJ0YWciOiIifQ"
+    };
+
+    try {
+      dio.FormData formData = dio.FormData.fromMap({
+        "variationId": variationId,
+        "productId": productId,
+        "colorId": colorId,
+        "sizeId": sizeId,
+        "qty": qty,
+      });
+
+      var response = await dio.Dio().post(
+        url,
+        options: dio.Options(
+          headers: headers,
+        ),
+        data: formData,
+      );
+
+      var jsonObject = jsonDecode(response.toString());
+
+      if (response.statusCode == 200) {
+        var loginResponse = CartAddorUpdate.fromJson(jsonObject);
+        print(response);
+
+        if (loginResponse.status == 200) {
+          print(response);
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => OtpScreen(mobileNumber: mobileNumber),
+          // ));
+        } else {
+          print(response);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(loginResponse.message ?? ''),
+            backgroundColor: Colors.redAccent,
+          ));
+        }
+      } else {
+        print(response);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Sending Message"),
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.toString()),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.only(top: 8.0),
+        ),
+      );
+      // } finally {
+      //   Timer(const Duration(seconds: 3), () {
+      //     mobilenumberController.clear();
+      //   });
+    }
+  }
+
+  void _onItemTapped(int index) async {
     setState(() {
       _selectedIndex = index;
     });
 
     // Show modal screen based on selected index
+    // print(index);
     switch (index) {
       case 0:
         _showAgeModal(context);
         break;
       case 1:
-        pushNewScreen(
-          context,
-          screen: PlaceOrderScreen(
-            itemName: widget.itemName,
-            price: widget.itemPrice,
-            deprecatedPrice: widget.deprecatedPrice,
-            deliveryDate: widget.deliveryDate,
-            imagePath: widget.imagePath,
-            discountPercentage: widget.discountPercentage,
-          ),
-          withNavBar: true, // OPTIONAL VALUE. True by default.
-          pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        );
+        {
+          // print('Button Pressed');
+          var products = await getCartList();
+          print(products);
+          Future.delayed(Duration.zero, () {
+            pushNewScreen(
+              context,
+              screen: CartScreen(
+                cartProducts: products,
+              ),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          });
+        }
+        ;
+        break;
+      default:
+        print(index);
         break;
     }
   }
@@ -194,7 +286,17 @@ class _BottomNavigationBar_ShoppingDetailsScreenState
               child: BottomNavBarItem(
                 text: 'ADD TO CART',
                 isSelected: _selectedIndex == 1,
-                onTap: () => _onItemTapped(1),
+                onTap: () async {
+                  AddorUpdateCartPostRequest(
+                    1,
+                    1,
+                    1,
+                    1,
+                    '2',
+                  );
+                  print('Hello');
+                  _onItemTapped(1);
+                },
               ),
             ),
           ],
